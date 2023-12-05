@@ -1,9 +1,6 @@
 package com.gm2.pdv.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 
@@ -19,7 +16,9 @@ public class User {
     private Long id;
 
 
+    @Column(length = 100, nullable = false)
     private String name;
+
     private boolean isEnabled;
 
 
