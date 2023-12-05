@@ -1,4 +1,4 @@
-package com.gm2.pdv.pvd;
+package com.gm2.pdv;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
