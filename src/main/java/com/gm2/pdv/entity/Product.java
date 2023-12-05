@@ -12,4 +12,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Entity
 public class Product {
+
+    private Long id;
+
 }
