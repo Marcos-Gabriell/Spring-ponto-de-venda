@@ -12,6 +12,7 @@ import lombok.*;
 @Table(name = "user")
 public class User {
 
+    @Id
     private Long id;
     private String name;
     private boolean isEnabled;
