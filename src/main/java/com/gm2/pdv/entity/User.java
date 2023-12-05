@@ -1,12 +1,11 @@
 package com.gm2.pdv.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class User {
 
     private Long id;
