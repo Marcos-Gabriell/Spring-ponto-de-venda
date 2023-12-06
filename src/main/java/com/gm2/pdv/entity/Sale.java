@@ -22,4 +22,7 @@ public class Sale {
 
     @Column(name = "sale_date", nullable = false)
     private LocalDate date;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
