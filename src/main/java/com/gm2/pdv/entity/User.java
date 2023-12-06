@@ -3,6 +3,8 @@ package com.gm2.pdv.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,5 +22,6 @@ public class User {
 
     private boolean isEnabled;
 
-
+    @OneToMany(mappedBy = "user")
+    private List<Sale> sales;
 }

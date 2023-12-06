@@ -30,5 +30,5 @@ public class ItemSale {
     private int qauntity;
 
     @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
-    private List<ItemSale> items
+    private List<ItemSale> items;
 }
