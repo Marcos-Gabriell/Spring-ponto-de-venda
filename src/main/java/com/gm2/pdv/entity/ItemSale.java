@@ -23,4 +23,7 @@ public class ItemSale {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+    @Column(nullable = false)
+    private int qauntity;
 }
