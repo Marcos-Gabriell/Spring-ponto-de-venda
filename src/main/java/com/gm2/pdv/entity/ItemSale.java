@@ -27,8 +27,13 @@ public class ItemSale {
     private Product product;
 
     @Column(nullable = false)
-    private int qauntity;
+    private int quantity;  // Corrigi o nome do campo para "quantity"
 
-    @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
-    private List<ItemSale> items;
+    @ManyToOne  // Removi a referência à lista de items
+    @JoinColumn(name = "parent_item_id")  // Adicionei um novo campo para mapear o item pai
+    private ItemSale parentItem;
+
+    @OneToMany(mappedBy = "parentItem", fetch = FetchType.LAZY)  // Alterei o mappedBy para "parentItem"
+    private List<ItemSale> childItems;
 }
+2
