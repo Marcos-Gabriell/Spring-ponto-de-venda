@@ -36,4 +36,3 @@ public class ItemSale {
     @OneToMany(mappedBy = "parentItem", fetch = FetchType.LAZY)  // Alterei o mappedBy para "parentItem"
     private List<ItemSale> childItems;
 }
-2
