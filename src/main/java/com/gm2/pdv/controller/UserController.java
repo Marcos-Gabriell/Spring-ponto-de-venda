@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/user")
@@ -24,8 +26,15 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity getAll() {
-        return new ResponseEntity(userRepository.findAll(), HttpStatus.OK);
+        List<User> userList = userRepository.findAll();
+
+        if (userList.isEmpty()) {
+            return new ResponseEntity<>("Nenhum usuário encontrado.", HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(userList, HttpStatus.OK);
+        }
     }
+
 
     @PostMapping
     public ResponseEntity post(@RequestBody User user) { // Corrigido o tipo do parâmetro para User
