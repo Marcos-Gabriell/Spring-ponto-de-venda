@@ -49,5 +49,13 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
+    public ResponseEntity delete(@PathVariable long id) {
+        try{
+            userRepository.deleteById(id);
+            return ResponseEntity( "Usuário excluído com sucesso!", HttpStatus.OK);
+        } catch (Exception error){
+            return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
