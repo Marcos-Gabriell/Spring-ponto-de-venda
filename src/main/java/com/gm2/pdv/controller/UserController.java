@@ -40,5 +40,12 @@ public class UserController {
     @PutMapping()
     public ResponseEntity puy(@RequestBody User user) {
       Optional<User> userToEdit = userRepository.findById(user.getId());
+
+      if(userToEdit.isPresent()) {
+          userRepository.save(user);
+          return new ResponseEntity(user, HttpStatus.OK);
+      }
+
+      return ResponseEntity.notFound().build();
     }
 }
