@@ -17,7 +17,7 @@ public class ProductController {
 
     private ProductRepository productRepository;
 
-    public ProductRepository(@Autowired ProductRepository productRepository) {
+    public ProductController (@Autowired ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @PutMapping()
-    public ResponseEntityput(@RequestBody Product product) {
+    public ResponseEntity put(@RequestBody Product product) {
         try {
             return new ResponseEntity(productRepository.save(product), HttpStatus.OK);
         } catch (Exception error){
@@ -46,12 +46,12 @@ public class ProductController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable long id) {
-        try{
+    public ResponseEntity<String> delete(@PathVariable long id) {
+        try {
             productRepository.deleteById(id);
-            return new ResolutionException("Produto removido com sucesso!", HttpStatus.OK);
-        }catch (Exception error){
-            return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Produto removido com sucesso!", HttpStatus.OK);
+        } catch (Exception error) {
+            return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
