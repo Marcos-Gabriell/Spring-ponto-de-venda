@@ -39,7 +39,7 @@ public class ProductController {
     @PutMapping()
     public ResponseEntityput(@RequestBody Product product) {
         try {
-            return new ResponseEntity(productRepository.save(product), HttpStatus.OK)
+            return new ResponseEntity(productRepository.save(product), HttpStatus.OK);
         } catch (Exception error){
             return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -49,7 +49,7 @@ public class ProductController {
     public ResponseEntity delete(@PathVariable long id) {
         try{
             productRepository.deleteById(id);
-            return new ResolutionException("Produto removido com sucesso!", HttpStatus.OK)
+            return new ResolutionException("Produto removido com sucesso!", HttpStatus.OK);
         }catch (Exception error){
             return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
