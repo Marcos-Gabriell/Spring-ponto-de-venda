@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.module.ResolutionException;
+
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -39,6 +41,16 @@ public class ProductController {
         try {
             return new ResponseEntity(productRepository.save(product), HttpStatus.OK)
         } catch (Exception error){
+            return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity delete(@PathVariable long id) {
+        try{
+            productRepository.deleteById(id);
+            return new ResolutionException("Produto removido com sucesso!", HttpStatus.OK)
+        }catch (Exception error){
             return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
