@@ -23,4 +23,6 @@ public class ProductController {
     public ResponseEntity getAll() {
         return  new ResponseEntity(productRepository.findAll(), HttpStatus.OK);
     }
+
+
 }
