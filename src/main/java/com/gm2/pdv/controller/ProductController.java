@@ -1,11 +1,14 @@
 package com.gm2.pdv.controller;
 
+import com.gm2.pdv.entity.Product;
 import com.gm2.pdv.respository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -25,4 +28,8 @@ public class ProductController {
     }
 
 
+    @PostMapping()
+    public ResponseEntity post(@RequestBody Product product) {
+        return new ResponseEntity(productRepository.save(product), HttpStatus.CREATED);
+    }
 }
