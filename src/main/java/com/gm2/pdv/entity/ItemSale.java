@@ -1,14 +1,13 @@
 package com.gm2.pdv.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import javax.persistence.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Table(name = "item_sale")
 @Entity
@@ -27,12 +26,5 @@ public class ItemSale {
     private Product product;
 
     @Column(nullable = false)
-    private int quantity;  // Corrigi o nome do campo para "quantity"
-
-    @ManyToOne  // Removi a referência à lista de items
-    @JoinColumn(name = "parent_item_id")  // Adicionei um novo campo para mapear o item pai
-    private ItemSale parentItem;
-
-    @OneToMany(mappedBy = "parentItem", fetch = FetchType.LAZY)  // Alterei o mappedBy para "parentItem"
-    private List<ItemSale> childItems;
+    private int quantity;
 }
