@@ -62,24 +62,12 @@ public class SaleService {
         }
 
         return products.stream().map(item -> {
-            Product product = productRepository.findById(item.getProductid())
-                    .orElseThrow(()-> new NoItemException("Item da venda não encontrado"));
+            Product product = productRepository.findById(item.getProductid());
 
             ItemSale itemSale = new ItemSale();
             itemSale.setProduct(product);
             itemSale.setQuantity(item.getQuantity());
 
-            if(product.getQuantity() == 0){
-                throw new NoItemException("Produto sem estoque.");
-            } else if(product.getQuantity() < item.getQuantity()){
-                throw new InvalidOperationException(
-                        String.format("A quantidade de itens da venda (%s) " +
-                                "é maior do que a quantidade disponível no estoque (%s", item.getQuantity(), product.getQuantity()));
-            }
-
-            int total = product.getQuantity() - item.getQuantity();
-            product.setQuantity(total);
-            productRepository.save(product);
 
             return itemSale;
         }).collect(Collectors.toList());
