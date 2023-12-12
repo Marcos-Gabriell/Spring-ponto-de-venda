@@ -1,11 +1,10 @@
 package com.gm2.pdv.service;
 
+
 import com.gm2.pdv.dto.ProductDTO;
 import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.entity.ItemSale;
-import com.gm2.pdv.entity.Product;
 import com.gm2.pdv.entity.Sale;
-import com.gm2.pdv.entity.User;
 import com.gm2.pdv.respository.ItemSaleRepository;
 import com.gm2.pdv.respository.ProductRepository;
 import com.gm2.pdv.respository.SaleRepository;
@@ -24,11 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class SaleService {
 
     private final UserRepository userRepository;
-
     private final ProductRepository productRepository;
-
     private final SaleRepository saleRepository;
-
     private final ItemSaleRepository itemSaleRepository;
 
     @Transactional
@@ -55,22 +51,21 @@ public class SaleService {
         }
     }
 
-    private List<ItemSale> getItemSale(List<ProductSaleDTO> products) {
+    private List<ItemSale> getItemSale(List<ProductDTO> products) {
 
         if(products.isEmpty()){
             throw new InvalidOperationException("Não possível adicionar a venda sem itens!");
         }
 
         return products.stream().map(item -> {
-            Product product = productRepository.findById(item.getProductid());
+            Product product = productRepository.findById(item.getProductid())
+                    .orElseThrow(() -> new NoItemException("Produto não encontrado!"));
 
             ItemSale itemSale = new ItemSale();
             itemSale.setProduct(product);
             itemSale.setQuantity(item.getQuantity());
 
-
             return itemSale;
         }).collect(Collectors.toList());
     }
-
 }
