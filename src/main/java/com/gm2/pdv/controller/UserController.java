@@ -19,7 +19,7 @@ public class UserController {
 
     private UserRepository userRepository;
 
-    // Corrigido o nome do parâmetro para userRepository
+
     public UserController(@Autowired UserRepository userRepository) {
         this.userRepository = userRepository;
     }
