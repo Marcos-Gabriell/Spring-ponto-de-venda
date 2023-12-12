@@ -26,7 +26,7 @@ public class SaleController {
             long id = saleService.save(saleDTO);
             return new ResponseEntity("Venda realziada com sucesso: " + id, HttpStatus.CREATED);
         } catch (Exception error){
-
+            return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
