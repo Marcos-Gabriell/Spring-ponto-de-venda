@@ -13,5 +13,5 @@ public class SaleDTO {
 
     private Long userid;
 
-    ListL<ProductDTO> items;
+    private List<ProductDTO> items;
 }
