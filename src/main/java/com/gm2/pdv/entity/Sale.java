@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +22,11 @@ public class Sale {
 
     @Column(name = "sale_date", nullable = false)
     private LocalDate date;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
+    private List<ItemSale> items;
 }

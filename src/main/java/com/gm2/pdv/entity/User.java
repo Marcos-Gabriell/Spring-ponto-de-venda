@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,4 +22,7 @@ public class User {
     private String name;
 
     private boolean isEnabled;
+
+    @OneToMany(mappedBy = "user")
+    private List<Sale> sales;
 }
