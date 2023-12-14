@@ -1,7 +1,6 @@
 package com.gm2.pdv.service;
 
 import com.gm2.pdv.dto.ProductDTO;
-import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.entity.ItemSale;
 import com.gm2.pdv.entity.Product;
 import com.gm2.pdv.entity.Sale;
@@ -11,7 +10,6 @@ import com.gm2.pdv.repository.ProductRepository;
 import com.gm2.pdv.repository.SaleRepository;
 import com.gm2.pdv.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
