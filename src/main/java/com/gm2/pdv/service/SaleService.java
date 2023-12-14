@@ -1,6 +1,7 @@
 package com.gm2.pdv.service;
 
 import com.gm2.pdv.dto.ProductDTO;
+import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.entity.ItemSale;
 import com.gm2.pdv.entity.Product;
 import com.gm2.pdv.entity.Sale;
