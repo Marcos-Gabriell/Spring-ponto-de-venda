@@ -3,23 +3,27 @@ package com.gm2.pdv.controller;
 import com.gm2.pdv.entity.User;
 import com.gm2.pdv.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-
-    public UserController(@Autowired UserRepository userRepository) {
+    @Autowired
+    public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @GetMapping
-    public ResponseEntity getAll() {
+    public ResponseEntity<?> getAll() {
         List<User> userList = userRepository.findAll();
 
         if (userList.isEmpty()) {
@@ -29,24 +33,23 @@ public class UserController {
         }
     }
 
-
     @PostMapping
-    public ResponseEntity post(@RequestBody User user) { // Corrigido o tipo do parâmetro para User
+    public ResponseEntity<?> post(@RequestBody User user) {
         try {
             user.setEnabled(true);
             return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
         } catch (Exception error) {
-            return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping
-    public ResponseEntity puy(@RequestBody User user) {
+    public ResponseEntity<?> put(@RequestBody User user) {
         Optional<User> userToEdit = userRepository.findById(user.getId());
 
-        if(userToEdit.isPresent()) {
+        if (userToEdit.isPresent()) {
             userRepository.save(user);
-            return new ResponseEntity(user, HttpStatus.OK);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }
 
         return ResponseEntity.notFound().build();
@@ -61,5 +64,4 @@ public class UserController {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
