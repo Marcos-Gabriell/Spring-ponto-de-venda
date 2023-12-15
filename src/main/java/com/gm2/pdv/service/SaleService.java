@@ -47,7 +47,7 @@ public class SaleService {
         return items.stream().map(item -> {
             ProdcutInfoDTO prodcutInfoDTO = new ProdcutInfoDTO();
             prodcutInfoDTO.setDescription(item.getProduct().getDescription());
-            prodcutInfoDTO.setQuantity(item.getProduct().getQuantity());
+            prodcutInfoDTO.setQuantity(item.getQuantity());
             return prodcutInfoDTO;
         }).collect(Collectors.toList());
     }
