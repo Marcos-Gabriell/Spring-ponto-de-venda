@@ -9,11 +9,5 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaleInfoDTO {
-
-    public String user;
-
-    private String date;
-
-    List<Pro>
+public class ProdcutInfoDTO {
 }
