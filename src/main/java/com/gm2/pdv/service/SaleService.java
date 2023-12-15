@@ -27,6 +27,8 @@ public class SaleService {
     private final SaleRepository saleRepository;
     private final ItemSaleRepository itemSaleRepository;
 
+    public List<Sa>
+
     @Transactional
     public long save(SaleDTO sale) {
         User user = userRepository.findById(sale.getUserid()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
