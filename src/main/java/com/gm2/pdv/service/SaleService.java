@@ -29,7 +29,7 @@ public class SaleService {
 
     @Transactional
     public long save(SaleDTO sale) {
-        User user = userRepository.findAllById(sale.getUserid()).get();
+        User user = userRepository.findById(sale.getUserid()).get();
 
         Sale newSale = new Sale();
         newSale.setUser(user);
@@ -45,7 +45,7 @@ public class SaleService {
 
     public void saveItemSale(List<ItemSale> items, Sale sale) {
         for (ItemSale item : items) {
-            item.setSale(newSale);
+            item.setSale(sale);
             itemSaleRepository.save(item);
         }
     }
