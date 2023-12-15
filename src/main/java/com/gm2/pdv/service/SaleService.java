@@ -27,7 +27,9 @@ public class SaleService {
     private final SaleRepository saleRepository;
     private final ItemSaleRepository itemSaleRepository;
 
-    public List<Sa>
+    public List<SaleDTO> findAll() {
+
+    }
 
     @Transactional
     public long save(SaleDTO sale) {
