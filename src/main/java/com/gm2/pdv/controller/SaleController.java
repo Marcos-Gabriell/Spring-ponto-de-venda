@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class SaleController {
 
-    private SaleService saleService;
+    private final SaleService saleService;
 
     @PostMapping()
     public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
 
         try {
             long id = saleService.save(saleDTO);
-            return new ResponseEntity("venda realizada com sucesso: " + id, HttpStatus.CREATED);
-        } catch (Exception error){
-            return new ResponseEntity(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("venda realizada com sucesso: " + id, HttpStatus.CREATED);
+        } catch (Exception error) {
+            return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
