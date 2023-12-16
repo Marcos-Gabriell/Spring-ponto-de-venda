@@ -16,21 +16,18 @@ public class SaleController {
 
     private final SaleService saleService;
 
-
-    @GetMapping()
+    @GetMapping
     public ResponseEntity getAll() {
         return new ResponseEntity(saleService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping()
-    public ResponseEntity getById(@PatchMapping long id) {
-        return new ResponseEntity(SaleService.getById(id), HttpStatus.OK);
+    @GetMapping("/{id}")  // Adiciona o path variable para o ID
+    public ResponseEntity getById(@PathVariable long id) {
+        return new ResponseEntity(saleService.getById(id), HttpStatus.OK);
     }
 
-
-    @PostMapping()
+    @PostMapping
     public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
-
         try {
             long id = saleService.save(saleDTO);
             return new ResponseEntity<>("venda realizada com sucesso: " + id, HttpStatus.CREATED);
