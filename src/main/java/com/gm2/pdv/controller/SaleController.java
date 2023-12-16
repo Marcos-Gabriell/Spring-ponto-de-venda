@@ -25,6 +25,9 @@ public class SaleController {
         return new ResponseEntity(saleService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping()
+    public ResponseEntity getByid
+
 
     @PostMapping()
     public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
