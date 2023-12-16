@@ -89,6 +89,6 @@ public class SaleService {
 
     public SaleInfoDTO getById(long id) {
        Sale sale = saleRepository.findById(id).get();
-
+       return  getSaleInfo(sale);
     }
 }
