@@ -1,5 +1,6 @@
 package com.gm2.pdv.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,5 +25,6 @@ public class User {
     private boolean isEnabled;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Sale> sales;
 }
