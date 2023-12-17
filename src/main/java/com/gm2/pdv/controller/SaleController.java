@@ -1,6 +1,8 @@
 package com.gm2.pdv.controller;
 
 import com.gm2.pdv.dto.SaleDTO;
+import com.gm2.pdv.exceptions.InvalidOperationException;
+import com.gm2.pdv.exceptions.NoltemException;
 import com.gm2.pdv.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class SaleController {
         try {
             long id = saleService.save(saleDTO);
             return new ResponseEntity<>("venda realizada com sucesso: " + id, HttpStatus.CREATED);
+        } catch (NoltemException | InvalidOperationException error) {
+            return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
