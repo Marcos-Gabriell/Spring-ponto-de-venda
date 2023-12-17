@@ -76,6 +76,7 @@ public class SaleService {
     }
 
     private List<ItemSale> getItemSale(List<ProductDTO> products) {
+
         return products.stream().map(item -> {
             Product product = productRepository.findById(item.getProductid()).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
@@ -83,7 +84,15 @@ public class SaleService {
             itemSale.setProduct(product);
             itemSale.setQuantity(item.getQuantity());
 
-            int total = product() -
+            if (product.getQuantity() == 0) {
+                throw new IllegalArgumentException();
+            } else if (product.getQuantity() < item.getQuantity()) {
+                throw new IllegalArgumentException();
+            }
+
+            int total = product.getQuantity() - item.getQuantity();
+            product.setQuantity(total);
+            productRepository.save(product);
 
             return itemSale;
         }).collect(Collectors.toList());
