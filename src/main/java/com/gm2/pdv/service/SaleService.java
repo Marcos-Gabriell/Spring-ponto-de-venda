@@ -80,7 +80,7 @@ public class SaleService {
     private List<ItemSale> getItemSale(List<ProductDTO> products) {
 
         if(products.isEmpty()) {
-
+            throw  new InvalidOperationException("Não é possível adiconar a venda sem itens! ")
         }
 
         return products.stream().map(item -> {
