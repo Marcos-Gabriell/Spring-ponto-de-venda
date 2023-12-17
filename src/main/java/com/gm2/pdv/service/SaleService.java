@@ -84,9 +84,7 @@ public class SaleService {
             itemSale.setProduct(product);
             itemSale.setQuantity(item.getQuantity());
 
-            if (product.getQuantity() == 0) {
-                throw new IllegalArgumentException();
-            } else if (product.getQuantity() < item.getQuantity()) {
+            if (product.getQuantity() == 0 || (product.getQuantity() < item.getQuantity())) {
                 throw new IllegalArgumentException();
             }
 
