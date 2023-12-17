@@ -90,8 +90,8 @@ public class SaleService {
                 throw new NoltemException("Produto sem estoque");
             } else if (product.getQuantity() < item.getQuantity()) {
                 throw new InvalidOperationException(
-                        String.format("A quantidade de itens da venda (%s)" +
-                                "é maior que a quantidade disponível no estoque (%s,", item.getQuantity(), product.getQuantity()));
+                        String.format("A quantidade de itens da venda (%s) " +
+                                "é maior que a quantidade disponível no estoque (%s) ", item.getQuantity(), product.getQuantity()));
             }
 
             int total = product.getQuantity() - item.getQuantity();
