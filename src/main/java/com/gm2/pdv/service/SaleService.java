@@ -21,6 +21,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,18 +57,25 @@ public class SaleService {
 
     @Transactional
     public long save(SaleDTO sale) {
-        User user = userRepository.findById(sale.getUserid()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+       Optional <User> optional = userRepository.findById(sale.getUserid());
 
-        Sale newSale = new Sale();
-        newSale.setUser(user);
-        newSale.setDate(LocalDate.now());
-        List<ItemSale> items = getItemSale(sale.getItems());
+       if(user.isPresent()) {
+          User user =  optional.get();
 
-        newSale = saleRepository.save(newSale);
 
-        saveItemSale(items, newSale);
+           Sale newSale = new Sale();
+           newSale.setUser(user);
+           newSale.setDate(LocalDate.now());
+           List<ItemSale> items = getItemSale(sale.getItems());
 
-        return newSale.getId();
+           newSale = saleRepository.save(newSale);
+
+           saveItemSale(items, newSale);
+
+           return newSale.getId();
+       } else {
+           throw new NoltemException("Usuário não encontrado")
+       }
     }
 
     public void saveItemSale(List<ItemSale> items, Sale sale) {
@@ -80,7 +88,7 @@ public class SaleService {
     private List<ItemSale> getItemSale(List<ProductDTO> products) {
 
         if(products.isEmpty()) {
-            throw  new InvalidOperationException("Não é possível adiconar a venda sem itens! ")
+            throw  new InvalidOperationException("Não é possível adiconar a venda sem itens! ");
         }
 
         return products.stream().map(item -> {
