@@ -21,7 +21,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,25 +56,19 @@ public class SaleService {
 
     @Transactional
     public long save(SaleDTO sale) {
-       Optional <User> optional = userRepository.findById(sale.getUserid());
+        User user = userRepository.findById(sale.getUserid())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-       if(user.isPresent()) {
-          User user =  optional.get();
+        Sale newSale = new Sale();
+        newSale.setUser(user);
+        newSale.setDate(LocalDate.now());
+        List<ItemSale> items = getItemSale(sale.getItems());
 
+        newSale = saleRepository.save(newSale);
 
-           Sale newSale = new Sale();
-           newSale.setUser(user);
-           newSale.setDate(LocalDate.now());
-           List<ItemSale> items = getItemSale(sale.getItems());
+        saveItemSale(items, newSale);
 
-           newSale = saleRepository.save(newSale);
-
-           saveItemSale(items, newSale);
-
-           return newSale.getId();
-       } else {
-           throw new NoltemException("Usuário não encontrado")
-       }
+        return newSale.getId();
     }
 
     public void saveItemSale(List<ItemSale> items, Sale sale) {
