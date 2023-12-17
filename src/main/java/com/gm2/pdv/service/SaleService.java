@@ -79,6 +79,10 @@ public class SaleService {
 
     private List<ItemSale> getItemSale(List<ProductDTO> products) {
 
+        if(products.isEmpty()) {
+
+        }
+
         return products.stream().map(item -> {
             Product product = productRepository.findById(item.getProductid()).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
