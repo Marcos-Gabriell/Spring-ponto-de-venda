@@ -83,6 +83,8 @@ public class SaleService {
             itemSale.setProduct(product);
             itemSale.setQuantity(item.getQuantity());
 
+            int total = product() -
+
             return itemSale;
         }).collect(Collectors.toList());
     }
