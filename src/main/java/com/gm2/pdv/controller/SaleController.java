@@ -25,13 +25,13 @@ public class SaleController {
     @GetMapping
     public ResponseEntity getAll() {
 
-        return new ResponseEntity(new ResponseDTO<List<SaleInfoDTO>>("", saleService.findAll() ), HttpStatus.OK);
+        return new ResponseEntity(new ResponseDTO<>("", saleService.findAll() ), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")  // Adiciona o path variable para o ID
     public ResponseEntity getById(@PathVariable long id) {
         try {
-            return new ResponseEntity(saleService.getById(id), HttpStatus.OK);
+            return new ResponseEntity(new ResponseDTO<>("", saleService.getById(id)), HttpStatus.OK);
         } catch (NoltemException | InvalidOperationException error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -41,11 +41,11 @@ public class SaleController {
     public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
         try {
             long id = saleService.save(saleDTO);
-            return new ResponseEntity<>("venda realizada com sucesso: " + id, HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseDTO<>("venda realizada com sucesso! ", id), HttpStatus.CREATED);
         } catch (NoltemException | InvalidOperationException error) {
-            return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), null), HttpStatus.BAD_REQUEST);
         } catch (Exception error) {
-            return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
