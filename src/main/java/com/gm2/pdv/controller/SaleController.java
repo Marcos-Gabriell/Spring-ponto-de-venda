@@ -25,7 +25,11 @@ public class SaleController {
 
     @GetMapping("/{id}")  // Adiciona o path variable para o ID
     public ResponseEntity getById(@PathVariable long id) {
-        return new ResponseEntity(saleService.getById(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity(saleService.getById(id), HttpStatus.OK);
+        } catch (NoltemException | InvalidOperationException error) {
+            return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping
