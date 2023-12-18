@@ -108,7 +108,8 @@ public class SaleService {
     }
 
     public SaleInfoDTO getById(long id) {
-       Sale sale = saleRepository.findById(id).get();
+       Sale sale = saleRepository.findById(id)
+               .orElseThrow( () -> new NoltemException("Venda não encontrada!"));
        return  getSaleInfo(sale);
     }
 }
