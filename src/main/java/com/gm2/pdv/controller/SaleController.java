@@ -1,6 +1,8 @@
 package com.gm2.pdv.controller;
 
+import com.gm2.pdv.dto.ResponseDTO;
 import com.gm2.pdv.dto.SaleDTO;
+import com.gm2.pdv.dto.SaleInfoDTO;
 import com.gm2.pdv.exceptions.InvalidOperationException;
 import com.gm2.pdv.exceptions.NoltemException;
 import com.gm2.pdv.service.SaleService;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/sale")
 @RequiredArgsConstructor
@@ -20,7 +24,8 @@ public class SaleController {
 
     @GetMapping
     public ResponseEntity getAll() {
-        return new ResponseEntity(saleService.findAll(), HttpStatus.OK);
+
+        return new ResponseEntity(new ResponseDTO<List<SaleInfoDTO>>("", saleService.findAll() ), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")  // Adiciona o path variable para o ID
