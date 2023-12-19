@@ -21,9 +21,9 @@ public class UserSevice {
                 new UserDTO(user.getId(), user.getName(), user.isEnabled()) ).collect(Collectors.toList());
     }
 
-    public User save(User user) {
-        return userRepository.save(user);
-    }
+    public UserDTO save(User user) {
+        userRepository.save(user);
+        return new UserDTO(user.getId(), user.getName(), user.isEnabled());
 
     public Optional<User> findById(long id) {
         return userRepository.findById(id);
