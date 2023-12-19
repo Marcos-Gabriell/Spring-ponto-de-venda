@@ -2,6 +2,7 @@ package com.gm2.pdv.controller;
 
 import com.gm2.pdv.entity.User;
 import com.gm2.pdv.repository.UserRepository;
+import com.gm2.pdv.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserSevice userSevice;
 
     @Autowired
     public UserController(UserRepository userRepository) {
@@ -54,6 +55,7 @@ public class UserController {
 
         return ResponseEntity.notFound().build();
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {

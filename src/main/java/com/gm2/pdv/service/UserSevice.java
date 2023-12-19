@@ -13,6 +13,7 @@ public class UserSevice {
     private UserRepository userRepository;
 
     public List<UserDTO> findAll() {
-        return userRepository.findAll().stream().map(user -> new UserDTO(user.getId(), user.getName(), user.isEnabled()) ).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(user ->
+                new UserDTO(user.getId(), user.getName(), user.isEnabled()) ).collect(Collectors.toList());
     }
 }
