@@ -38,10 +38,10 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<?> put(@RequestBody User user) {
-        Optional<User> userToEdit = userSevice.findById(user.getId());
+        Optional<User> userToEdit = userService.findById(user.getId());
 
         if (userToEdit.isPresent()) {
-            userSevice.save(user);
+            userService.save(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
 
@@ -52,7 +52,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         try {
-            userSevice.deleteById(id);
+            userService.deleteById(id);
             return new ResponseEntity<>("Usuário excluído com sucesso!", HttpStatus.OK);
         } catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
