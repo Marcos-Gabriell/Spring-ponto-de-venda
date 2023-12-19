@@ -6,6 +6,7 @@ import com.gm2.pdv.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +23,7 @@ public class UserSevice {
         return userRepository.save(user);
     }
 
-    public Opitional<User> findById(long id) {
+    public Optional<User> findById(long id) {
         return userRepository.findById(id);
     }
 

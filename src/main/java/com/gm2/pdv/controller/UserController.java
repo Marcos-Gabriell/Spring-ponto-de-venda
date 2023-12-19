@@ -19,7 +19,7 @@ public class UserController {
     private final UserSevice userSevice;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserSevice userSevice) {
         this.userSevice = userSevice;
     }
 
