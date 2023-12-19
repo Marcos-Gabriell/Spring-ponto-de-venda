@@ -25,4 +25,8 @@ public class UserSevice {
     public Opitional<User> findById(long id) {
         return userRepository.findById(id);
     }
+
+    public void deleteById(long id){
+        userRepository.deleteById(id);
+    }
 }
