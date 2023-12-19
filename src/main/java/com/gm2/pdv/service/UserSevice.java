@@ -12,9 +12,7 @@ public class UserSevice {
 
     private UserRepository userRepository;
 
-    public List<UserDTO> getAll() {
-        return userRepository.findAll().stream().map(user ->{
-
-        }).collect(Collectors.toList());
+    public List<UserDTO> findAll() {
+        return userRepository.findAll().stream().map(user -> new UserDTO(user.getId(), user.getName(), user.isEnabled()) ).collect(Collectors.toList());
     }
 }

@@ -16,5 +16,5 @@ public class UserDTO {
 
     private String name;
 
-    private List<ProdcutInfoDTO>
+    private boolean isEnabled;
 }

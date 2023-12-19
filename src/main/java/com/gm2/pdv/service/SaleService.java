@@ -48,6 +48,7 @@ public class SaleService {
     private List<ProdcutInfoDTO> getproductInfo(List<ItemSale> items) {
         return items.stream().map(item -> {
             ProdcutInfoDTO prodcutInfoDTO = new ProdcutInfoDTO();
+            prodcutInfoDTO.setId(item.getId());
             prodcutInfoDTO.setDescription(item.getProduct().getDescription());
             prodcutInfoDTO.setQuantity(item.getQuantity());
             return prodcutInfoDTO;
