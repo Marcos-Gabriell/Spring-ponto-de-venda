@@ -24,21 +24,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        List<User> userList = userSevice.findAll();
-
-        if (userList.isEmpty()) {
-            return new ResponseEntity<>("Nenhum usuário encontrado.", HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(userList, HttpStatus.OK);
-        }
-    }
+    public ResponseEntity<?> getAll() { return new ResponseEntity<>(userSevice.findAll(), HttpStatus.OK);}
 
     @PostMapping
     public ResponseEntity<?> post(@RequestBody User user) {
         try {
             user.setEnabled(true);
-            return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
+            return new ResponseEntity<>(userSevice.save(user), HttpStatus.CREATED);
         } catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -46,10 +38,10 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<?> put(@RequestBody User user) {
-        Optional<User> userToEdit = userRepository.findById(user.getId());
+        Optional<User> userToEdit = userSevice.findById(user.getId());
 
         if (userToEdit.isPresent()) {
-            userRepository.save(user);
+            userSevice.save(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
 
@@ -60,7 +52,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         try {
-            userRepository.deleteById(id);
+            userSevice.deleteById(id);
             return new ResponseEntity<>("Usuário excluído com sucesso!", HttpStatus.OK);
         } catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

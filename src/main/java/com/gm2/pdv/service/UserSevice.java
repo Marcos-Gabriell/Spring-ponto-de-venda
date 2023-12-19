@@ -21,4 +21,8 @@ public class UserSevice {
     public User save(User user) {
         return userRepository.save(user);
     }
+
+    public Opitional<User> findById(long id) {
+        return userRepository.findById(id);
+    }
 }
