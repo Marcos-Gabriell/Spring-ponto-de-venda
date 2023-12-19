@@ -25,7 +25,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        List<User> userList = userRepository.findAll();
+        List<User> userList = userSevice.findAll();
 
         if (userList.isEmpty()) {
             return new ResponseEntity<>("Nenhum usuário encontrado.", HttpStatus.NOT_FOUND);
