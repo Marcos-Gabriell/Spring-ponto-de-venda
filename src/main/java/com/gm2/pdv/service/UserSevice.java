@@ -1,6 +1,7 @@
-package com.gm2.pdv.repository;
+package com.gm2.pdv.service;
 
 import com.gm2.pdv.dto.UserDTO;
+import com.gm2.pdv.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

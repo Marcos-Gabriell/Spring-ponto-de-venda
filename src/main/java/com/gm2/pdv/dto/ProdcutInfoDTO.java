@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProdcutInfoDTO {
 
+    private long id;
+
     private String description;
 
     private int quantity;
