@@ -11,25 +11,26 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserSevice {
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
     public List<UserDTO> findAll() {
         return userRepository.findAll().stream().map(user ->
-                new UserDTO(user.getId(), user.getName(), user.isEnabled()) ).collect(Collectors.toList());
+                new UserDTO(user.getId(), user.getName(), user.isEnabled())).collect(Collectors.toList());
     }
 
     public UserDTO save(User user) {
         userRepository.save(user);
         return new UserDTO(user.getId(), user.getName(), user.isEnabled());
+    }
 
     public Optional<User> findById(long id) {
         return userRepository.findById(id);
     }
 
-    public void deleteById(long id){
+    public void deleteById(long id) {
         userRepository.deleteById(id);
     }
 }
