@@ -26,6 +26,10 @@ public class UserService {
         return new UserDTO(user.getId(), user.getName(), user.isEnabled());
     }
 
+    public Optional<User> findById(long id ) {
+        User user = userRepository.findById(id);
+    }
+
     public Optional<User> findById(long id) {
         return userRepository.findById(id);
     }
