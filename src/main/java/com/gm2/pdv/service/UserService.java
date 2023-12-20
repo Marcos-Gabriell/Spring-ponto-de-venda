@@ -46,8 +46,12 @@ public class UserService {
     }
 
 
-    public UserDTO upadate(User) {
-        Optional <User> optional = userRepository.findById(id);
+    public UserDTO upadate(User user) {
+        Optional <User> optional = userRepository.findById(user.getId());
+
+        if(!optional.isPresent()) {
+            throw new NoltemException("Usuário não encontrado!" );
+        }
     }
 
     public void deleteById(long id) {
