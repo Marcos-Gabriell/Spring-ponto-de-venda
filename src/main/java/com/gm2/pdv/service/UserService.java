@@ -2,6 +2,7 @@ package com.gm2.pdv.service;
 
 import com.gm2.pdv.dto.UserDTO;
 import com.gm2.pdv.entity.User;
+import com.gm2.pdv.exceptions.NoltemException;
 import com.gm2.pdv.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,14 @@ public class UserService {
         return new UserDTO(user.getId(), user.getName(), user.isEnabled());
     }
 
-    public Optional<User> findById(long id ) {
-        User user = userRepository.findById(id);
+    public UserDTO findById(long id ) {
+        Optional <User> user = userRepository.findById(id);
+
+        if(!user.isPresent()) {
+            throw new NoltemException("Usuário não encontrado!" );
+        }
+        User user = op
+        return new UserDTO()
     }
 
     public Optional<User> findById(long id) {
