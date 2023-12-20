@@ -41,9 +41,9 @@ public class UserController {
     @PutMapping
     public ResponseEntity<?> put(@RequestBody User user) {
       try {
-          return new ResponseEntity<>(userService.upadate(user), HttpStatus.ok);
+          return new ResponseEntity<>(userService.upadate(user), HttpStatus.OK);
       } catch (NoltemException error){
-          return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), user, HttpStatus.BAD_REQUEST));
+          return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), user), HttpStatus.BAD_REQUEST);
       } catch (NoltemException error){
           return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR));
       }
