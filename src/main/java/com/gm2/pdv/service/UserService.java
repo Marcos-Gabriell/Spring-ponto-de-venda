@@ -28,16 +28,27 @@ public class UserService {
     }
 
     public UserDTO findById(long id ) {
+
+
         Optional <User> optional = userRepository.findById(id);
 
-        if(!user.isPresent()) {
+        if(!optional.isPresent()) {
             throw new NoltemException("Usuário não encontrado!" );
         }
         User user = optional.get();
         return new UserDTO(user.getId(), user.getName(), user.isEnabled());
+        if(!optional.isPresent()) {
+            throw new NoltemException("Usuário não encontrado!" );
+        }
+
+        userRepository.save(user);
+        return new UserDTO(user.getId(), user.getName(), user.isEnabled());
     }
 
 
+    public UserDTO upadate(User) {
+        Optional <User> optional = userRepository.findById(id);
+    }
 
     public void deleteById(long id) {
         userRepository.deleteById(id);

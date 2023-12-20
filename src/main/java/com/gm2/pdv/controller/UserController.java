@@ -1,6 +1,8 @@
 package com.gm2.pdv.controller;
 
+import com.gm2.pdv.dto.ResponseDTO;
 import com.gm2.pdv.entity.User;
+import com.gm2.pdv.exceptions.NoltemException;
 import com.gm2.pdv.repository.UserRepository;
 import com.gm2.pdv.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,15 +40,15 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<?> put(@RequestBody User user) {
-        Optional<User> userToEdit = userService.findById(user.getId());
-
-        if (userToEdit.isPresent()) {
-            userService.save(user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }
-
-        return ResponseEntity.notFound().build();
+      try {
+          return new ResponseEntity<>(userService.upadate(user), HttpStatus.ok);
+      } catch (NoltemException error){
+          return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), user, HttpStatus.BAD_REQUEST));
+      } catch (NoltemException error){
+          return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR));
+      }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
