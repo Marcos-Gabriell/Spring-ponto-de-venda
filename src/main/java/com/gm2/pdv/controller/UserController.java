@@ -48,7 +48,6 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         try {

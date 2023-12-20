@@ -28,18 +28,16 @@ public class UserService {
     }
 
     public UserDTO findById(long id ) {
-        Optional <User> user = userRepository.findById(id);
+        Optional <User> optional = userRepository.findById(id);
 
         if(!user.isPresent()) {
             throw new NoltemException("Usuário não encontrado!" );
         }
-        User user = op
-        return new UserDTO()
+        User user = optional.get();
+        return new UserDTO(user.getId(), user.getName(), user.isEnabled());
     }
 
-    public Optional<User> findById(long id) {
-        return userRepository.findById(id);
-    }
+
 
     public void deleteById(long id) {
         userRepository.deleteById(id);
