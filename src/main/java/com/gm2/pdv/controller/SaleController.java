@@ -25,7 +25,7 @@ public class SaleController {
     @GetMapping
     public ResponseEntity getAll() {
 
-        return new ResponseEntity(new ResponseDTO<>("", saleService.findAll() ), HttpStatus.OK);
+        return new ResponseEntity(saleService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")  // Adiciona o path variable para o ID
