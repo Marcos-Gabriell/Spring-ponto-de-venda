@@ -54,7 +54,7 @@ public class UserController {
     public ResponseEntity<String> delete(@PathVariable long id) {
         try {
             userService.deleteById(id);
-            return new ResponseEntity<>( new ResponseDTO("\"Usuário excluído com sucesso!"), HttpStatus.OK);
+            return new ResponseEntity<>( new ResponseDTO("Usuário excluído com sucesso!"), HttpStatus.OK);
         } catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
