@@ -1,6 +1,6 @@
 package com.gm2.pdv.controller;
 
-import com.gm2.pdv.dto.ResponseDTO;
+
 import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.dto.SaleInfoDTO;
 import com.gm2.pdv.exceptions.InvalidOperationException;
