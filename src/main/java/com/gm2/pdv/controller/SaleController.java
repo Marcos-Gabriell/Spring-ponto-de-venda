@@ -1,6 +1,7 @@
 package com.gm2.pdv.controller;
 
 
+import com.gm2.pdv.dto.ResponseDTO;
 import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.dto.SaleInfoDTO;
 import com.gm2.pdv.exceptions.InvalidOperationException;
@@ -24,7 +25,6 @@ public class SaleController {
 
     @GetMapping
     public ResponseEntity getAll() {
-
         return new ResponseEntity(saleService.findAll(), HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class SaleController {
     public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
         try {
             long id = saleService.save(saleDTO);
-            return new ResponseEntity<>(new ResponseDTO<>("venda realizada com sucesso! "), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseDTO("venda realizada com sucesso! "), HttpStatus.CREATED);
         } catch (NoltemException | InvalidOperationException error) {
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception error) {
