@@ -6,6 +6,7 @@ import com.gm2.pdv.exceptions.NoltemException;
 import com.gm2.pdv.repository.UserRepository;
 import com.gm2.pdv.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,9 @@ public class UserController {
         try {
             userService.deleteById(id);
             return new ResponseEntity( new ResponseDTO("Usuário excluído com sucesso!"), HttpStatus.OK);
-        } catch (Exception error) {
+        } catch (EmptyResultDataAccessException error){
+            return new ResponseEntity( new ResponseDTO("Usuário não encontrado!"), HttpStatus.BAD_REQUEST);
+        }catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

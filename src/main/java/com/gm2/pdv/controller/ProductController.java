@@ -49,7 +49,7 @@ public class ProductController {
             productRepository.deleteById(id);
             return new ResponseEntity<>(new ResponseDTO("Produto removido com sucesso!"), HttpStatus.OK);
         } catch (Exception error) {
-            return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseDTO("Produto não encontrado"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
