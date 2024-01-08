@@ -44,19 +44,18 @@ public class UserController {
         try {
             return new ResponseEntity<>(userService.upadate(user), HttpStatus.OK);
         } catch (NoltemException error) {
-            return new ResponseEntity(new ResponseDTO<>(error.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new ResponseDTO(error.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception error) {
-            return new ResponseEntity(new ResponseDTO<>(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable long id) {
-        try {
+    public ResponseEntity delete(@PathVariable long id) {
+        try
+        {
             userService.deleteById(id);
-            return new ResponseEntity( new ResponseDTO("Usuário excluído com sucesso!"), HttpStatus.OK);
-        } catch (EmptyResultDataAccessException error){
-            return new ResponseEntity( new ResponseDTO("Usuário não encontrado!"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new ResponseDTO("Usuário excluído com sucesso!"), HttpStatus.OK);
         }catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
