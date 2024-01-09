@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/sale")
@@ -41,7 +41,7 @@ public class SaleController {
     public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
         try {
             long id = saleService.save(saleDTO);
-            return new ResponseEntity<>(new ResponseDTO("venda realizada com sucesso! "), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseDTO("venda realizada com sucesso!"), HttpStatus.CREATED);
         } catch (NoltemException | InvalidOperationException error) {
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception error) {

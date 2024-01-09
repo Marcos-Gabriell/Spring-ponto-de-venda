@@ -30,7 +30,7 @@ public class ProductController {
         try {
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
         } catch (Exception error) {
-            return new ResponseEntity<>(new ResponseDTO<>(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -39,7 +39,7 @@ public class ProductController {
         try {
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         } catch (Exception error) {
-            return new ResponseEntity<>(new ResponseDTO<>(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
