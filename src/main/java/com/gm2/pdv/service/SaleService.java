@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,15 +47,21 @@ public class SaleService {
                 .build();
     }
 
-    private List<ProdcutInfoDTO> getproductInfo(List<ItemSale> items) {
-        return items.stream().map(item -> {
-            ProdcutInfoDTO prodcutInfoDTO = new ProdcutInfoDTO();
-            prodcutInfoDTO.setId(item.getId());
-            prodcutInfoDTO.setDescription(item.getProduct().getDescription());
-            prodcutInfoDTO.setQuantity(item.getQuantity());
-            return prodcutInfoDTO;
-        }).collect(Collectors.toList());
+    private List<ProdcutInfoDTO> getProductInfo(List<ItemSale> items) {
+        if (CollectionsUtils.isEmpty(items)) {
+            return Collections.emptyList();
+        }
+
+        return items.stream().map(
+                item -> ProductInfoDTO.builder()
+                        .id(item.getId())
+                        .description(item.getProduct().getDescription())
+                        .quantity(item.getQuantity())
+                        .build()
+        ).collect(Collectors.toList());
     }
+
+
 
     @Transactional
     public long save(SaleDTO sale) {
