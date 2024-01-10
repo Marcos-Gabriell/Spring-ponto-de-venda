@@ -17,5 +17,5 @@ public class SaleInfoDTO {
 
     private String date;
 
-    List<ProdcutInfoDTO> products;
+    List<ProductInfoDTO> products;
 }

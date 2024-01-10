@@ -1,6 +1,6 @@
 package com.gm2.pdv.service;
 
-import com.gm2.pdv.dto.ProdcutInfoDTO;
+import com.gm2.pdv.dto.ProductInfoDTO;
 import com.gm2.pdv.dto.ProductDTO;
 import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.dto.SaleInfoDTO;
@@ -39,16 +39,16 @@ public class SaleService {
     }
 
     private SaleInfoDTO getSaleInfo(Sale sale) {
-
         return SaleInfoDTO.builder()
-        .user(sale.getUser().getName())
+                .user(sale.getUser().getName())
                 .date(sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                .products(getproductInfo(sale.getItems()))
+                .products(getProductInfo(sale.getItems()))
                 .build();
     }
 
-    private List<ProdcutInfoDTO> getProductInfo(List<ItemSale> items) {
-        if (CollectionsUtils.isEmpty(items)) {
+
+    private List<ProductInfoDTO> getProductInfo(List<ItemSale> items) {
+        if (items.isEmpty()) {
             return Collections.emptyList();
         }
 
@@ -60,6 +60,7 @@ public class SaleService {
                         .build()
         ).collect(Collectors.toList());
     }
+
 
 
 
