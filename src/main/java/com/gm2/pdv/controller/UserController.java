@@ -46,11 +46,10 @@ public class UserController {
         try {
             return new ResponseEntity<>(userService.upadate(user), HttpStatus.OK);
         } catch (NoltemException error) {
-            return new ResponseEntity(new ResponseDTO(error.getMessage()), HttpStatus.BAD_REQUEST);
-        } catch (Exception error) {
             return new ResponseEntity(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable long id) {
