@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SaleController {
 
+    @Autowired
     private final SaleService saleService;
 
     @GetMapping
