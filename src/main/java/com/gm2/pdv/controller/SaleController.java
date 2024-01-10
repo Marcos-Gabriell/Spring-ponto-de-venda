@@ -34,7 +34,7 @@ public class SaleController {
         try {
             return new ResponseEntity(saleService.getById(id), HttpStatus.OK);
         } catch (NoltemException | InvalidOperationException error) {
-            return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -58,7 +58,7 @@ public class SaleService {
     @Transactional
     public long save(SaleDTO sale) {
         User user = userRepository.findById(sale.getUserid())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado! "));
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
         Sale newSale = new Sale();
         newSale.setUser(user);

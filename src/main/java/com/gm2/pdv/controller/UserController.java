@@ -58,7 +58,10 @@ public class UserController {
         {
             userService.deleteById(id);
             return new ResponseEntity(new ResponseDTO("Usuário excluído com sucesso!"), HttpStatus.OK);
-        }catch (Exception error) {
+        } catch (EmptyResultDataAccessException error){
+            return new ResponseEntity<>(new ResponseDTO("Não foi possível localizar o usuário! "), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
