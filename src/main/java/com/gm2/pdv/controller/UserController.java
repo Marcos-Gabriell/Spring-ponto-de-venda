@@ -27,7 +27,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() { return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);}
+    public ResponseEntity getAll() {
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<?> post(@RequestBody User user) {
