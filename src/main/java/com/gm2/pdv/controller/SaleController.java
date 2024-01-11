@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 
 @Controller
@@ -40,7 +39,7 @@ public class SaleController {
     }
 
     @PostMapping
-    public ResponseEntity post(@Valid @RequestBody SaleDTO saleDTO) {
+    public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
         try {
             long id = saleService.save(saleDTO);
             return new ResponseEntity<>(new ResponseDTO("venda realizada com sucesso!"), HttpStatus.CREATED);

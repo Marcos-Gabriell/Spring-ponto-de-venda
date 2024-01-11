@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -28,7 +26,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> post(@Valid @RequestBody Product product) {
+    public ResponseEntity<?> post(@RequestBody Product product) {
         try {
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
         } catch (Exception error) {
@@ -37,7 +35,7 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<?> put(@Valid @RequestBody Product product) {
+    public ResponseEntity<?> put(@RequestBody Product product) {
         try {
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         } catch (Exception error) {

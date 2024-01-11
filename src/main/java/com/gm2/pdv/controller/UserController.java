@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> post(@Valid @RequestBody User user) {
+    public ResponseEntity<?> post(@RequestBody User user) {
         try {
             user.setEnabled(true);
             return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
@@ -43,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> put(@Valid @RequestBody User user) {
+    public ResponseEntity<?> put(@RequestBody User user) {
         try {
             return new ResponseEntity<>(userService.upadate(user), HttpStatus.OK);
         } catch (NoltemException error) {
