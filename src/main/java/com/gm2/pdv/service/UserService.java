@@ -18,40 +18,44 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<UserDTO> findAll() {
-        return userRepository.findAll().stream().map(user ->
-                new UserDTO(user.getId(), user.getName(), user.isEnabled())).collect(Collectors.toList());
+        return userRepository.findAll().stream()
+                .map(user -> new UserDTO(user.getId(), user.getName(), user.isEnabled()))
+                .collect(Collectors.toList());
     }
 
     public UserDTO save(User user) {
         User userToSave = new User();
         userToSave.setEnabled(user.isEnabled());
         userToSave.setName(user.getName());
-
         userRepository.save(userToSave);
-        return new UserDTO(user.getId(), user.getName(), user.isEnabled());
+        return new UserDTO(userToSave.getId(), userToSave.getName(), userToSave.isEnabled());
     }
 
-    public UserDTO findById(long id ) {
+    public UserDTO findById(long id) {
         Optional<User> optional = userRepository.findById(id);
 
-        if(!optional.isPresent()) {
-            throw new NoltemException("Usuário não encontrado!" );
+        if (!optional.isPresent()) {
+            throw new NoltemException("Usuário não encontrado!");
         }
 
-      User user = optional.get();
+        User user = optional.get();
         return new UserDTO(user.getId(), user.getName(), user.isEnabled());
     }
 
+    public UserDTO update(User user) {
+        Optional<User> optionalUser = userRepository.findById(user.getId());
 
-    public UserDTO upadate(User user) {
-        Optional<User> userToedit = userRepository.findById(user.getId());
-
-        if(!userToedit.isPresent()) {
-            throw new NoltemException("Usuário não encontrado!" );
+        if (!optionalUser.isPresent()) {
+            throw new NoltemException("Usuário não encontrado!");
         }
 
-        userRepository.save(user);
-        return new UserDTO(user.getId(), user.getName(), user.isEnabled());
+        User existingUser = optionalUser.get();
+        existingUser.setEnabled(user.isEnabled());
+        existingUser.setName(user.getName());
+
+        userRepository.save(existingUser);
+
+        return new UserDTO(existingUser.getId(), existingUser.getName(), existingUser.isEnabled());
     }
 
     public void deleteById(long id) {
