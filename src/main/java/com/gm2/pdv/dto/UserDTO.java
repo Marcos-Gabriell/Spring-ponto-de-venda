@@ -1,5 +1,6 @@
 package com.gm2.pdv.dto;
 
+import com.gm2.pdv.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,8 @@ public class UserDTO {
     private String name;
 
     private boolean isEnabled;
+
+    public User toEntity() {
+
+    }
 }
