@@ -1,7 +1,7 @@
 package com.gm2.pdv.service;
 
-import com.gm2.pdv.dto.ProductInfoDTO;
-import com.gm2.pdv.dto.ProductDTO;
+
+import com.gm2.pdv.dto.ProductSaleDTO;
 import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.dto.SaleInfoDTO;
 import com.gm2.pdv.entity.ItemSale;
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,21 +46,15 @@ public class SaleService {
     }
 
 
-    private List<ProductInfoDTO> getProductInfo(List<ItemSale> items) {
+    private List<ProductSaleDTO> getProductInfo(List<ItemSale> items) {
         if (items.isEmpty()) {
             return Collections.emptyList();
         }
 
         return items.stream().map(
-                item -> ProductInfoDTO.builder()
-                        .id(item.getId())
-                        .description(item.getProduct().getDescription())
-                        .quantity(item.getQuantity())
-                        .build()
+                item -> new ProductSaleDTO(item.getProduct().getId(), item.getQuantity())
         ).collect(Collectors.toList());
     }
-
-
 
 
     @Transactional
@@ -88,7 +81,7 @@ public class SaleService {
         }
     }
 
-    private List<ItemSale> getItemSale(List<ProductDTO> products) {
+    private List<ItemSale> getItemSale(List<ProductSaleDTO> products) {
 
         if(products.isEmpty()) {
             throw  new InvalidOperationException("Não é possível adiconar a venda sem itens! ");

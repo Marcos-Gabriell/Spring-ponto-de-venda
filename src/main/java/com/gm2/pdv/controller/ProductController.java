@@ -1,8 +1,10 @@
 package com.gm2.pdv.controller;
 
+import com.gm2.pdv.dto.ProductDTO;
 import com.gm2.pdv.dto.ResponseDTO;
 import com.gm2.pdv.entity.Product;
 import com.gm2.pdv.repository.ProductRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,12 @@ public class ProductController {
 
     private final ProductRepository productRepository;
 
+    private ModelMapper mapper;
+
     @Autowired
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
+        this.mapper = new ModelMapper();
     }
 
     @GetMapping
@@ -26,18 +31,18 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> post(@RequestBody Product product) {
+    public ResponseEntity<?> post(@RequestBody ProductDTO product) {
         try {
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
+            return new ResponseEntity<>(productRepository.save(mapper.map(product, Product.class)), HttpStatus.CREATED);
         } catch (Exception error) {
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping
-    public ResponseEntity<?> put(@RequestBody Product product) {
+    public ResponseEntity<?> put(@RequestBody ProductDTO product) {
         try {
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            return new ResponseEntity<>(productRepository.save(mapper.map(product, Product.class)), HttpStatus.OK);
         } catch (Exception error) {
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
