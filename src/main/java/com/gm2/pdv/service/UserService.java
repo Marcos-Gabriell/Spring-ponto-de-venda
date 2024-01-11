@@ -23,7 +23,11 @@ public class UserService {
     }
 
     public UserDTO save(User user) {
-        userRepository.save(user);
+        User userToSave = new User();
+        userToSave.setEnabled(user.isEnabled());
+        userToSave.setName(user.getName());
+
+        userRepository.save(userToSave);
         return new UserDTO(user.getId(), user.getName(), user.isEnabled());
     }
 

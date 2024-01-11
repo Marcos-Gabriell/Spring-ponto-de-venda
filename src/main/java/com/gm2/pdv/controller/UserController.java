@@ -1,6 +1,7 @@
 package com.gm2.pdv.controller;
 
 import com.gm2.pdv.dto.ResponseDTO;
+import com.gm2.pdv.dto.UserDTO;
 import com.gm2.pdv.entity.User;
 import com.gm2.pdv.exceptions.NoltemException;
 import com.gm2.pdv.repository.UserRepository;
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> post(@RequestBody User user) {
+    public ResponseEntity<?> post(@RequestBody UserDTO user) {
         try {
             user.setEnabled(true);
             return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> put(@RequestBody User user) {
+    public ResponseEntity<?> put(@RequestBody UserDTO user) {
         try {
             return new ResponseEntity<>(userService.upadate(user), HttpStatus.OK);
         } catch (NoltemException error) {
