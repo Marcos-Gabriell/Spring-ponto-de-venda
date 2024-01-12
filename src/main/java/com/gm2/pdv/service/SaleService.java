@@ -1,6 +1,5 @@
 package com.gm2.pdv.service;
 
-
 import com.gm2.pdv.dto.ProductInfoDTO;
 import com.gm2.pdv.dto.ProductSaleDTO;
 import com.gm2.pdv.dto.SaleDTO;
@@ -36,13 +35,9 @@ public class SaleService {
     private final ItemSaleRepository itemSaleRepository;
 
     public List<SaleInfoDTO> findAll() {
-        return saleRepository.findAll().stream().map(sale -> getSaleInfo(sale)).collect(Collectors.toList());
+        return saleRepository.findAll().stream().map(this::getSaleInfo).collect(Collectors.toList());
     }
 
-
-    // Remova um dos métodos getProductInfo, mantendo apenas um deles
-
-    // Corrija a chamada do método getSaleInfo
     private SaleInfoDTO getSaleInfo(Sale sale) {
         List<ProductSaleDTO> products = getProductInfo(sale.getItems());
         BigDecimal total = getTotal(products);
@@ -55,7 +50,6 @@ public class SaleService {
                 .build();
     }
 
-    // Corrija a assinatura do método getTotal
     private BigDecimal getTotal(List<ProductSaleDTO> products) {
         BigDecimal total = BigDecimal.ZERO;
 
@@ -66,8 +60,15 @@ public class SaleService {
         return total;
     }
 
+    private List<ProductSaleDTO> getProductInfo(List<ItemSale> items) {
+        if (items.isEmpty()) {
+            return Collections.emptyList();
+        }
 
-
+        return items.stream()
+                .map(item -> new ProductSaleDTO(item.getProduct().getId(), item.getQuantity(), item.getProduct().getPrice()))
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public long save(SaleDTO sale) {
@@ -94,13 +95,13 @@ public class SaleService {
     }
 
     private List<ItemSale> getItemSale(List<ProductSaleDTO> products) {
-
-        if(products.isEmpty()) {
-            throw  new InvalidOperationException("Não é possível adiconar a venda sem itens! ");
+        if (products.isEmpty()) {
+            throw new InvalidOperationException("Não é possível adicionar a venda sem itens!");
         }
 
         return products.stream().map(item -> {
-            Product product = productRepository.findById(item.getProductid()).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+            Product product = productRepository.findById(item.getProductid())
+                    .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
             ItemSale itemSale = new ItemSale();
             itemSale.setProduct(product);
@@ -123,8 +124,8 @@ public class SaleService {
     }
 
     public SaleInfoDTO getById(long id) {
-       Sale sale = saleRepository.findById(id)
-               .orElseThrow( () -> new NoltemException("Venda não encontrada!"));
-       return  getSaleInfo(sale);
+        Sale sale = saleRepository.findById(id)
+                .orElseThrow(() -> new NoltemException("Venda não encontrada!"));
+        return getSaleInfo(sale);
     }
 }

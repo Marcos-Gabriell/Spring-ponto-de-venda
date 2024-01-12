@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;  // Adicionado import para BigDecimal
 
 @Data
 @NoArgsConstructor
@@ -13,6 +14,9 @@ public class ProductSaleDTO {
 
     @NotNull(message = "O item da venda é obrigatório")
     private long productid;
+
     @NotNull(message = "O campo quantidade é obrigatório")
     private int quantity;
+
+    private BigDecimal price;  // Adicionado campo para o preço
 }
