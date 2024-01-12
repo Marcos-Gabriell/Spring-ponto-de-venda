@@ -1,6 +1,6 @@
 package com.gm2.pdv.service;
 
-
+import com.gm2.pdv.dto.ProductInfoDTO;
 import com.gm2.pdv.dto.ProductSaleDTO;
 import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.dto.SaleInfoDTO;
@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -34,28 +35,40 @@ public class SaleService {
     private final ItemSaleRepository itemSaleRepository;
 
     public List<SaleInfoDTO> findAll() {
-        return saleRepository.findAll().stream().map(sale -> getSaleInfo(sale)).collect(Collectors.toList());
+        return saleRepository.findAll().stream().map(this::getSaleInfo).collect(Collectors.toList());
     }
 
     private SaleInfoDTO getSaleInfo(Sale sale) {
+        List<ProductSaleDTO> products = getProductInfo(sale.getItems());
+        BigDecimal total = getTotal(products);
+
         return SaleInfoDTO.builder()
                 .user(sale.getUser().getName())
                 .date(sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                .products(getProductInfo(sale.getItems()))
+                .products(products)
+                .total(total)
                 .build();
     }
 
+    private BigDecimal getTotal(List<ProductSaleDTO> products) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (ProductSaleDTO currentProduct : products) {
+            total = total.add(currentProduct.getPrice().multiply(new BigDecimal(currentProduct.getQuantity())));
+        }
+
+        return total;
+    }
 
     private List<ProductSaleDTO> getProductInfo(List<ItemSale> items) {
         if (items.isEmpty()) {
             return Collections.emptyList();
         }
 
-        return items.stream().map(
-                item -> new ProductSaleDTO(item.getProduct().getId(), item.getQuantity())
-        ).collect(Collectors.toList());
+        return items.stream()
+                .map(item -> new ProductSaleDTO(item.getProduct().getId(), item.getQuantity(), item.getProduct().getPrice()))
+                .collect(Collectors.toList());
     }
-
 
     @Transactional
     public long save(SaleDTO sale) {
@@ -82,13 +95,13 @@ public class SaleService {
     }
 
     private List<ItemSale> getItemSale(List<ProductSaleDTO> products) {
-
-        if(products.isEmpty()) {
-            throw  new InvalidOperationException("Não é possível adiconar a venda sem itens! ");
+        if (products.isEmpty()) {
+            throw new InvalidOperationException("Não é possível adicionar a venda sem itens!");
         }
 
         return products.stream().map(item -> {
-            Product product = productRepository.findById(item.getProductid()).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+            Product product = productRepository.findById(item.getProductid())
+                    .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
             ItemSale itemSale = new ItemSale();
             itemSale.setProduct(product);
@@ -111,8 +124,8 @@ public class SaleService {
     }
 
     public SaleInfoDTO getById(long id) {
-       Sale sale = saleRepository.findById(id)
-               .orElseThrow( () -> new NoltemException("Venda não encontrada!"));
-       return  getSaleInfo(sale);
+        Sale sale = saleRepository.findById(id)
+                .orElseThrow(() -> new NoltemException("Venda não encontrada!"));
+        return getSaleInfo(sale);
     }
 }

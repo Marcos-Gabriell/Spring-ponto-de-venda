@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -14,8 +15,7 @@ import java.util.List;
 public class SaleInfoDTO {
 
     public String user;
-
     private String date;
-
-    List<ProductSaleDTO> products;
+    private BigDecimal total;
+    private List<ProductSaleDTO> products;
 }
