@@ -41,23 +41,31 @@ public class SaleService {
 
     private SaleInfoDTO getSaleInfo(Sale sale) {
 
-     var products List<ProductInfoDTO> =  getProductInfo(sale.getItems());
-        BigDecimal total = getTotal(products)
+        List<ProductInfoDTO> products = getProductInfo(sale.getItems());
+        BigDecimal total = getTotal(products);
+
 
         return SaleInfoDTO.builder()
                 .user(sale.getUser().getName())
                 .date(sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                .products()
+                .products(products)
+                .total(total)
                 .build();
     }
 
 
-    private BigDecimal getTotal(Lists<SaleInfoDTO> products) {
+    private BigDecimal getTotal(List<SaleInfoDTO> products) {
+
         BigDecimal total = new BigDecimal(0);
+
         for(int i=0; i < products.size(); i++) {
-            ProductInfoDTO currentProduct
-            total = total.add(.get(i).getPrice().multiply(new BigDecimal(products.get(i).getQuantity));
+            ProductInfoDTO currentProduct = products.get(i);
+
+            total = total.add(currentProduct.get(i).getPrice()
+                    .multiply(new BigDecimal(currentProduct.getQuantity)));
         }
+
+        return total;
     }
 
 
