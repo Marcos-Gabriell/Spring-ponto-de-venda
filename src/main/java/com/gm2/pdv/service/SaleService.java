@@ -1,6 +1,7 @@
 package com.gm2.pdv.service;
 
 
+import com.gm2.pdv.dto.ProductInfoDTO;
 import com.gm2.pdv.dto.ProductSaleDTO;
 import com.gm2.pdv.dto.SaleDTO;
 import com.gm2.pdv.dto.SaleInfoDTO;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -38,11 +40,24 @@ public class SaleService {
     }
 
     private SaleInfoDTO getSaleInfo(Sale sale) {
+
+     var products List<ProductInfoDTO> =  getProductInfo(sale.getItems());
+        BigDecimal total = getTotal(products)
+
         return SaleInfoDTO.builder()
                 .user(sale.getUser().getName())
                 .date(sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                .products(getProductInfo(sale.getItems()))
+                .products()
                 .build();
+    }
+
+
+    private BigDecimal getTotal(Lists<SaleInfoDTO> products) {
+        BigDecimal total = new BigDecimal(0);
+        for(int i=0; i < products.size(); i++) {
+            ProductInfoDTO currentProduct
+            total = total.add(.get(i).getPrice().multiply(new BigDecimal(products.get(i).getQuantity));
+        }
     }
 
 
