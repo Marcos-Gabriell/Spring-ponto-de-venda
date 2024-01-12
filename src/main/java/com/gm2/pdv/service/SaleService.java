@@ -39,11 +39,13 @@ public class SaleService {
         return saleRepository.findAll().stream().map(sale -> getSaleInfo(sale)).collect(Collectors.toList());
     }
 
+
+    // Remova um dos métodos getProductInfo, mantendo apenas um deles
+
+    // Corrija a chamada do método getSaleInfo
     private SaleInfoDTO getSaleInfo(Sale sale) {
-
-        List<ProductInfoDTO> products = getProductInfo(sale.getItems());
+        List<ProductSaleDTO> products = getProductInfo(sale.getItems());
         BigDecimal total = getTotal(products);
-
 
         return SaleInfoDTO.builder()
                 .user(sale.getUser().getName())
@@ -53,31 +55,18 @@ public class SaleService {
                 .build();
     }
 
+    // Corrija a assinatura do método getTotal
+    private BigDecimal getTotal(List<ProductSaleDTO> products) {
+        BigDecimal total = BigDecimal.ZERO;
 
-    private BigDecimal getTotal(List<SaleInfoDTO> products) {
-
-        BigDecimal total = new BigDecimal(0);
-
-        for(int i=0; i < products.size(); i++) {
-            ProductInfoDTO currentProduct = products.get(i);
-
-            total = total.add(currentProduct.get(i).getPrice()
-                    .multiply(new BigDecimal(currentProduct.getQuantity)));
+        for (ProductSaleDTO currentProduct : products) {
+            total = total.add(currentProduct.getPrice().multiply(new BigDecimal(currentProduct.getQuantity())));
         }
 
         return total;
     }
 
 
-    private List<ProductSaleDTO> getProductInfo(List<ItemSale> items) {
-        if (items.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        return items.stream().map(
-                item -> new ProductSaleDTO(item.getProduct().getId(), item.getQuantity())
-        ).collect(Collectors.toList());
-    }
 
 
     @Transactional
