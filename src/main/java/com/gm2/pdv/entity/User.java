@@ -1,9 +1,6 @@
 package com.gm2.pdv.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,9 +19,14 @@ public class User {
     @Column(length = 100, nullable = false)
     private String name;
 
+    @Column(length = 30, nullable = false, unique = true)
+    private String username;
+
+    @Column(length = 60, nullable = false)
+    private String password;
+
     private boolean isEnabled;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Sale> sales;
 }
