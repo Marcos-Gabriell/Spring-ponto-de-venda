@@ -11,50 +11,50 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 
-    private final ProductRepository productRepository;
-
+    private ProductRepository productRepository;
     private ModelMapper mapper;
 
-    @Autowired
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(@Autowired ProductRepository productRepository){
         this.productRepository = productRepository;
         this.mapper = new ModelMapper();
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAll() {
+    @GetMapping()
+    public ResponseEntity getAll(){
         return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?> post(@RequestBody ProductDTO product) {
+    @PostMapping()
+    public ResponseEntity post(@Valid @RequestBody ProductDTO product){
         try {
             return new ResponseEntity<>(productRepository.save(mapper.map(product, Product.class)), HttpStatus.CREATED);
-        } catch (Exception error) {
+        } catch (Exception error){
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping
-    public ResponseEntity<?> put(@RequestBody ProductDTO product) {
+    @PutMapping()
+    public ResponseEntity put(@Valid @RequestBody ProductDTO product){
         try {
             return new ResponseEntity<>(productRepository.save(mapper.map(product, Product.class)), HttpStatus.OK);
-        } catch (Exception error) {
+        } catch (Exception error){
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDTO> delete(@PathVariable long id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity delete(@PathVariable long id){
         try {
             productRepository.deleteById(id);
             return new ResponseEntity<>(new ResponseDTO("Produto removido com sucesso!"), HttpStatus.OK);
-        } catch (Exception error) {
-            return new ResponseEntity<>(new ResponseDTO("Produto não encontrado"), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception error){
+            return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
