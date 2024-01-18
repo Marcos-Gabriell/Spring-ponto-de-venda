@@ -15,6 +15,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     private CustomUserDetailService userDetailService;
 
     @Override
@@ -27,9 +30,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login" +
+                        "").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    public OncePerRequestFilter jwtFilter(){
+        return new JwtAuthFilter(jwtService, userDetailService);
     }
 }
