@@ -1,24 +1,26 @@
 package com.gm2.pdv.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;  // Importa a classe Keys para obter uma SecretKey
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
 
-@Service  // Movido a anotação @Service para a classe
+@Service
 public class JwtService {
 
     @Value("${security.jwt.expiration}")
     private int expiration;
-
     @Value("${security.jwt.key}")
-    private String key;  // Corrigido o tipo da variável para String
+    private String key;
 
-    public String generateToken(String username) {  // Corrigido o nome do método para generateToken
+    public String generateToken(String username){
+
         Calendar currentTimeNow = Calendar.getInstance();
         currentTimeNow.add(Calendar.MINUTE, expiration);
         Date expirationDate = currentTimeNow.getTime();
@@ -33,9 +35,20 @@ public class JwtService {
     }
 
     private SecretKey getSecretKey() {
-        // Aqui você pode implementar a lógica para obter a chave secreta.
-        // Exemplo simples usando a chave em bytes (deve ser tratado de forma mais segura na prática):
-        byte[] keyBytes = key.getBytes();
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private Claims getClaims(String token){
+        SecretKey secretKey = getSecretKey();
+
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public String getUserName(String token) {
+        return getClaims(token).getSubject();
     }
 }
