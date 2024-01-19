@@ -18,6 +18,7 @@ Este é um projeto de ponto de venda construído em Java, Spring Boot, Spring Da
 - MySQL
 - Spring Security
 - JWT (JSON Web Token)
+- GIT
 - Postman (para testes de API)
 - IntelliJ (IDE utilizada)
 
