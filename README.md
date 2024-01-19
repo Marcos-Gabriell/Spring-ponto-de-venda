@@ -8,6 +8,7 @@ Este é um projeto de ponto de venda construído em Java, Spring Boot, Spring Da
 - Registro de Vendas
 - Cadastro de Produtos
 
+
 ## Tecnologias Utilizadas
 
 - Java
