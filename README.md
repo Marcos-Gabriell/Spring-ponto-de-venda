@@ -7,7 +7,6 @@
 
 
 
-
 Este é um projeto de ponto de venda construído em Java, Spring Boot, Spring Data JPA, Hibernate, MySQL, seguindo a arquitetura REST. O projeto também inclui recursos de segurança com Spring Security e JWT.
 
 ## Funcionalidades
